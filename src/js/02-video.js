@@ -23,22 +23,39 @@
 
 
 import vimeoPlayer from "@vimeo/player";
-import lodashThrottle from "lodash.throttle";
+import throttle from "lodash.throttle";
 
-const iframe = document.querySelector('iframe');
+const iframe = document.querySelector('#vimeo-player');
 const player = new vimeoPlayer(iframe);
 
+// ===================================== 
+setCurrentTime();
 
-
-player.on('timeupdate', lodashThrottle(onPlay, 1000));
+player.on('timeupdate', throttle(onPlay, 1000));
 
 function onPlay(data) {
-  localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+  localStorage.setItem('videoplayer-current-time', `${data.seconds}`);
 }
 
-const savedData = localStorage.getItem('videoplayer-current-time');
-if (savedData) {
-  player.setCurrentTime(JSON.parse(savedData).seconds);
+function setCurrentTime() {
+  const savedTime = localStorage.getItem('videoplayer-current-time');
+  if (savedTime) {
+    player.setCurrentTime(savedTime);
+  }
 }
+
+
+// =======================================
+// player.on('timeupdate', throttle(onPlay, 1000));
+
+// function onPlay(data) {
+//   localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+// }
+
+// const savedTime = localStorage.getItem('videoplayer-current-time');
+// if (savedTime) {
+//   player.setCurrentTime(JSON.parse(savedTime).seconds);
+// }
+
 
 
