@@ -13,10 +13,11 @@ const formRef = document.querySelector('.feedback-form');
 formRef.addEventListener('input', throttle(onFormInput, 500));
 formRef.addEventListener('submit', onFormSubmit);
 
+
 const STORAGE_KEY = 'feedback-form-state';
 const data = {};
 
-fillFormOnLoad();
+fillForm();
 
 function onFormInput(event) {
   data[event.target.name] = event.target.value;
@@ -24,7 +25,7 @@ function onFormInput(event) {
   console.log(data);
 }
 
-function fillFormOnLoad() {
+function fillForm() {
   const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (savedData) {
     const inputRef = formRef.querySelector('input');
