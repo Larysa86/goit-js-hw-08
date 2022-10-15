@@ -29,33 +29,35 @@ const iframe = document.querySelector('#vimeo-player');
 const player = new vimeoPlayer(iframe);
 
 // ===================================== 
-setCurrentTime();
+// setCurrentTime();
 
-player.on('timeupdate', throttle(onPlay, 1000));
-
-function onPlay(data) {
-  localStorage.setItem('videoplayer-current-time', `${data.seconds}`);
-}
-
-function setCurrentTime() {
-  const savedTime = localStorage.getItem('videoplayer-current-time');
-  if (savedTime) {
-    player.setCurrentTime(savedTime);
-  }
-}
-
-
-// =======================================
 // player.on('timeupdate', throttle(onPlay, 1000));
 
 // function onPlay(data) {
-//   localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+//   localStorage.setItem('videoplayer-current-time', `${data.seconds}`);
 // }
 
-// const savedTime = localStorage.getItem('videoplayer-current-time');
-// if (savedTime) {
-//   player.setCurrentTime(JSON.parse(savedTime).seconds);
+// function setCurrentTime() {
+//   const savedTime = localStorage.getItem('videoplayer-current-time');
+//   if (savedTime) {
+//     player.setCurrentTime(savedTime);
+//   }
 // }
+
+
+// =======================================
+player.on('timeupdate', throttle(onPlay, 1000));
+
+function onPlay(data) {
+  localStorage.setItem('videoplayer-current-time', JSON.stringify(data));
+}
+console.log(localStorage);
+
+
+const savedTime = localStorage.getItem('videoplayer-current-time');
+if (savedTime) {
+  player.setCurrentTime(JSON.parse(savedTime).seconds);
+}
 
 
 
